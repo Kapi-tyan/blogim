@@ -1,0 +1,15 @@
+.page-container {
+    position: relative;
+    min-height: 10vh;
+    position: absolute;
+    bottom: -10;
+    left: 35%;
+    right: 30%;
+  }
+  
+  .pagination {
+    position: absolute;
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px 0;
+  }

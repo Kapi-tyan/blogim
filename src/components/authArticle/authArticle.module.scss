@@ -1,0 +1,44 @@
+.error {
+    color: red;
+    &Input {
+        border: 1px solid red;
+      }
+      &Text {
+        font-size: 12px;
+      }
+  }
+  
+  .input{
+    width: 874px;
+  }
+
+  .wrapperForm{
+    margin: 20px;
+  }
+  .alert{
+    width: 100px;
+    height: 100px;
+  }
+
+.buttonDelete{
+  width: 120px;
+  height: 40px;
+    color: #F5222D;
+    border-color: #F5222D;
+    &:hover{
+    background-color: #f5222de0 !important;
+    color: white !important;
+    border-color: white !important;
+    }
+
+}
+.inputTag{
+  height: 40px;
+  width: 300px;
+}
+.buttonAddTage{
+  width: 120px;
+  height: 40px;
+  color: #1890FF;
+  border-color: #1890FF;
+}

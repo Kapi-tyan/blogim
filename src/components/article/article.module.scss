@@ -1,0 +1,91 @@
+.container {  
+    display: grid;
+    grid-template-columns: minmax(150px, 2fr) 3fr minmax(150px, 1fr) minmax(150px, 1fr);
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    justify-items: stretch;
+    grid-template-areas:
+      "title like userName avatar"
+      "tag tag date ."
+      "description description description description";
+  }
+  .description{
+    grid-area: description;
+    font-size: 12px;
+    color: #000000BF;
+  }
+  .tag { 
+    display: flex;
+    height: 30px;
+    width:600px;
+    grid-area: tag;
+    color:#00000080;
+    font-size: 11px;
+    margin-right: 3px;
+    overflow: hidden;
+    margin-top:-40px;
+    &Item{
+       border: 1px solid #00000080; 
+       border-radius: 5px;
+       width: fit-content;
+       height: fit-content;
+       padding: 2px;
+       margin-right: 2px;      
+    }
+ }
+  
+  .like { 
+    grid-area: like;
+    font-size: 12px;
+    width: 30px;
+    height: 30px;
+    &::before{
+        content: url(../../assets/img/Vector.svg);
+        padding:3px;
+
+    }
+ }
+ .liked::before {
+  content: url(../../assets/img/liked.svg);
+  filter: hue-rotate(0deg) saturate(100%) brightness(0.6) contrast(100) grayscale(0);
+}
+  
+  .userName { 
+    grid-area: userName;
+    margin-top:10px;
+ }
+  
+  .date { 
+    grid-area: date;
+    color:#00000080;
+    font-size: 13px;
+    margin-top:-30px;
+ }
+  
+  .avatar { 
+    grid-area: avatar;
+    padding-left: 20px;
+    width: 70px;
+        height: 70px;
+    &Img{
+        width: 70px;
+        height: 70px;
+        border-radius: 40px;
+    }
+ }
+  
+  .title {
+     grid-area: title; color: #1890FF;
+     overflow: hidden;
+     text-decoration: none;
+     }
+  .container  {
+    width: 938px;
+    height: 140px;
+    margin: 1.5% 20%;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.045);
+    padding: 15px;
+  }

@@ -1,0 +1,74 @@
+.layout{
+  overflow: hidden;
+  width: 80;
+  max-width: 100%;
+};
+.header {
+  color: black;
+  font-size: 18px;
+  height: 80px;
+  line-height: 64px;
+  background-color: white;
+};
+.headerButtonSignUp{
+  position: relative;
+  right: 0;
+  left:86%;
+  color:#52C41A;
+  border-color: #52C41A;
+  
+}
+
+.headerButtonSignIn{
+  position: relative;
+  right: 0;
+  left:85%;
+  &:hover{
+    background-color: #188fff17 !important;
+  }
+}
+.headerButtonCreateArticle{
+  position: relative;
+  right: 0;
+  height: 31px;
+  width: 112px;
+  color:#52C41A;
+  border-color: #52C41A;
+  &:hover{
+    background-color: #52C41Ae0 !important;
+    color: white !important;
+    border-color: white !important;
+    }
+}
+.avatar { 
+  padding-left: 20px;
+  &Img{
+      width: 46px;
+      height: 46px;
+      border-radius: 40px;
+      margin-top: -20px;
+      margin-right: 10px;
+  }
+}
+.wrapperLogHeader{
+  margin-top: -40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.userName{
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: -17px;
+  margin-left: 17px;
+  color:black;
+}
+.headerButtonLogOut{
+  width: 109px;
+    height: 51px;
+color:#000000BF;
+margin-top: -10px;
+&:hover{
+  background-color: #188fff17 !important;
+}
+}
