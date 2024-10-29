@@ -4,7 +4,6 @@ import { articlesSlice } from './slices/articlesSlice';
 import { signUpSlice } from './slices/signUpSlice';
 import { signInSlice } from './slices/signInSlice';
 import { editProfileSlice } from './slices/editProfileSlice';
-import { authArticleSlice } from './slices/authArticleSlice';
 import authReducer from './slices/authSlice';
 
 const store = configureStore({
@@ -13,7 +12,6 @@ const store = configureStore({
     [signInSlice.reducerPath]: signInSlice.reducer,
     [signUpSlice.reducerPath]: signUpSlice.reducer,
     [editProfileSlice.reducerPath]: signUpSlice.reducer,
-    [authArticleSlice.reducerPath]: signUpSlice.reducer,
     auth: authReducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -21,8 +19,7 @@ const store = configureStore({
       .concat(articlesSlice.middleware)
       .concat(signInSlice.middleware)
       .concat(editProfileSlice.middleware)
-      .concat(signUpSlice.middleware)
-      .concat(authArticleSlice.middleware),
+      .concat(signUpSlice.middleware),
 });
 
 export default store;

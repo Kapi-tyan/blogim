@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Spin, Alert, Button, Input, Checkbox, Form, message } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Spin, Button, Input, Checkbox, Form, message } from 'antd';
 import { useForm, Controller } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
@@ -8,7 +8,7 @@ import { usePostSignUpMutation } from '../../store/slices/signUpSlice';
 import style from './signUp.module.scss';
 
 const SignUp = () => {
-  const [postSignUp, { error, isLoading }] = usePostSignUpMutation();
+  const [postSignUp, { isLoading }] = usePostSignUpMutation();
   const [hasError, setHasError] = useState(false);
 
   const {
@@ -18,11 +18,6 @@ const SignUp = () => {
     formState: { errors },
   } = useForm({ mode: 'onTouched' });
 
-  const errorAlert = (
-    <div className={style.wrapperAlert}>
-      <Alert message="Access error" description="Check the data you entered" type="error" showIcon />
-    </div>
-  );
   const [messageApi, contextHolder] = message.useMessage();
   const success = () => {
     messageApi.open({
@@ -30,10 +25,18 @@ const SignUp = () => {
       content: 'Successfully registered',
     });
   };
+  useEffect(() => {
+    if (hasError) {
+      messageApi.open({
+        type: 'error',
+        content: 'Registration error, try again',
+      });
+      setHasError(false);
+    }
+  }, [hasError, messageApi]);
   const onSubmit = async (data) => {
     try {
       await postSignUp(data).unwrap();
-      setHasError(false);
       success();
     } catch (err) {
       setHasError(true);
@@ -47,17 +50,12 @@ const SignUp = () => {
       </div>
     );
   }
-  if (error) {
-    return errorAlert;
-  }
-
   const password = watch('password');
 
   return (
     <>
       {contextHolder}
       <div className={style.wrapperForm}>
-        {hasError && errorAlert}
         <Form onFinish={handleSubmit(onSubmit)}>
           <div className={style.headerSignUp}>Create new account</div>
           <div className={style.wrapperInput}>

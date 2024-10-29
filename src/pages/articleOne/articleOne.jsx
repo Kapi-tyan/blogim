@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
 import { format } from 'date-fns';
@@ -6,15 +6,14 @@ import enUS from 'date-fns/locale/en-US';
 import { Spin, Button, Popconfirm, message } from 'antd';
 import ReactMarkdown from 'react-markdown';
 
-import { useGetArticleBySlugQuery } from '../../store/slices/articlesSlice';
-import { useDeleteArticleMutation } from '../../store/slices/authArticleSlice';
+import { useGetArticleBySlugQuery, useDeleteArticleMutation } from '../../store/slices/articlesSlice';
 import noPhotos from '../../assets/img/avatar-male-president-svgrepo-com.svg';
 
 import style from './articleOne.module.scss';
 
 const ArticleOne = () => {
   const { slug } = useParams();
-  const { data, isLoading } = useGetArticleBySlugQuery(slug);
+  const { data, isLoading, refetch } = useGetArticleBySlugQuery(slug);
   const user = useSelector((state) => state.auth.user);
   const [deleteArticle] = useDeleteArticleMutation();
   const [messageApi, contextHolder] = message.useMessage();
@@ -25,6 +24,9 @@ const ArticleOne = () => {
         success();
       });
   };
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
   const success = () => {
     messageApi.open({
       type: 'success',
@@ -43,6 +45,7 @@ const ArticleOne = () => {
     return <div>Статья не найдена</div>;
   }
   const isAuthor = user?.username === data.article.author.username;
+  const isFavorited = data.article.favorited ? true : false;
   return (
     <>
       {contextHolder}
@@ -58,7 +61,7 @@ const ArticleOne = () => {
           ))}
         </div>
         <div className={style.description}>{data.article.description}</div>
-        <div className={style.like}>{data.article.favoritesCount}</div>
+        <div className={`${style.like} ${isFavorited ? style.liked : ''}`}>{data.article.favoritesCount}</div>
         <div className={style.userName}>{data.article.author.username}</div>
         <div className={style.date}>{format(new Date(data.article.createdAt), 'MMMM d, yyyy', { locale: enUS })}</div>
         <div className={style.avatar}>
@@ -82,7 +85,7 @@ const ArticleOne = () => {
                 Delete
               </Button>
             </Popconfirm>
-            <Link to={`/articles/${data.article.slug}/edit`}>
+            <Link to={`/article/${data.article.slug}/edit`}>
               <Button className={style.buttonEdit}> Edit </Button>
             </Link>
           </div>

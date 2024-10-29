@@ -4,7 +4,7 @@ import enUS from 'date-fns/locale/en-US';
 import { Link } from 'react-router-dom';
 import { message } from 'antd';
 
-import { useLikeArticleMutation, useDislikeArticleMutation } from '../../store/slices/authArticleSlice';
+import { useLikeArticleMutation, useDislikeArticleMutation } from '../../store/slices/articlesSlice';
 import noPhotos from '../../assets/img/avatar-male-president-svgrepo-com.svg';
 
 import style from './article.module.scss';
@@ -61,7 +61,10 @@ const Article = ({ articles }) => {
     <>
       {contextHolder}
       {articles.map((article) => {
-        const favoritesCount = likedArticles[article.slug] ? article.favoritesCount + 1 : article.favoritesCount;
+        const [imageSrc, setImageSrc] = useState(noPhotos);
+        useEffect(() => {
+          setImageSrc(article.author.image || noPhotos);
+        }, [article.author.image]);
         return (
           <div className={style.container} key={article.slug}>
             <div className={style.tag}>
@@ -75,20 +78,24 @@ const Article = ({ articles }) => {
               className={`${style.like} ${likedArticles[article.slug] ? style.liked : ''}`}
               onClick={() => handleLikeToggle(article.slug)}
             >
-              {favoritesCount}
+              {article.favoritesCount}
             </div>
             <div className={style.userName}>{article.author.username}</div>
             <div className={style.date}>{format(new Date(article.createdAt), 'MMMM d, yyyy', { locale: enUS })}</div>
             <div className={style.avatar}>
               <img
-                src={article.author.image || noPhotos}
+                src={imageSrc}
+                onError={(e) => {
+                  e.target.onerror = null;
+                  setImageSrc(noPhotos);
+                }}
                 alt={`image ${article.author.username}`}
                 className={style.avatarImg}
               />
             </div>
             <div className={style.description}>{article.description}</div>
             <div className={style.title}>
-              <Link to={`/articles/${article.slug}`} className={style.title}>
+              <Link to={`/article/${article.slug}`} className={style.title}>
                 {article.title}
               </Link>
             </div>

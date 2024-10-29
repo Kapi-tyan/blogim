@@ -69,12 +69,18 @@
   
   .like { 
     grid-area: like;
-    font-size: 12px;    
+    font-size: 12px; 
+    width: 30px;
+    height: 30px;   
     &::before{
         content: url(../../assets/img/Vector.svg);
         padding:3px;
     }
  }
+ .liked::before {
+  content: url(../../assets/img/liked.svg);
+  filter: hue-rotate(0deg) saturate(100%) brightness(0.6) contrast(100) grayscale(0);
+}
   
   .userName { 
     grid-area: userName;

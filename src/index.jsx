@@ -13,11 +13,12 @@ import Profile from './pages/profile/profile.jsx';
 import PrivateRoute from './components/privateRoute/privateRoute.jsx';
 import NewArticle from './pages/newArticle/newArticle.jsx';
 import EditArticle from './pages/editArticle/editArticle.jsx';
+import { ROUTES } from './constants/routes.js';
 
 const root = document.getElementById('root');
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: ROUTES.BLOG_PAGE,
     element: <App />,
     children: [
       {
@@ -25,19 +26,19 @@ const router = createBrowserRouter([
         element: <BlogPade />,
       },
       {
-        path: 'articles/:slug',
+        path: ROUTES.ARTICLE_ONE,
         element: <ArticleOne />,
       },
       {
-        path: 'sign-in',
+        path: ROUTES.SIGN_IN,
         element: <SignIn />,
       },
       {
-        path: 'sign-up',
+        path: ROUTES.SIGN_UP,
         element: <SignUp />,
       },
       {
-        path: 'profile',
+        path: ROUTES.PROFILE,
         element: (
           <PrivateRoute>
             <Profile />
@@ -45,7 +46,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'new-article',
+        path: ROUTES.NEW_ARTICLE,
         element: (
           <PrivateRoute>
             <NewArticle />
@@ -53,7 +54,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'articles/:slug/edit',
+        path: ROUTES.EDIT_ARTICLE,
         element: (
           <PrivateRoute>
             <EditArticle />

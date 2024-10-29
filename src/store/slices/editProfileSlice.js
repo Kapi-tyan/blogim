@@ -1,13 +1,15 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
+import { BASE_URL } from '../../constants/baseURL';
+
 import { fetchProtectedData } from './signInSlice';
 import { signIn } from './authSlice';
 
 export const editProfileSlice = createApi({
   reducerPath: 'editProfileApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://blog-platform.kata.academy/api',
+    baseUrl: BASE_URL,
     prepareHeaders: (headers) => {
       const token = localStorage.getItem('token');
       if (token) {

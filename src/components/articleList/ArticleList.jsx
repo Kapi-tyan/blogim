@@ -10,7 +10,6 @@ const ArticleList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const limit = 5;
   const { data, isLoading, error } = useGetArticlesQuery({ limit, offset: (currentPage - 1) * limit });
-
   if (isLoading) {
     return (
       <div className="wrapper-spin">

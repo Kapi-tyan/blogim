@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Flex, Layout, Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +13,7 @@ const Header = () => {
   const { Header } = Layout;
   const dispatch = useDispatch();
   const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const [userImage, setUserImage] = useState(noPhotos);
   useEffect(() => {
     const token = localStorage.getItem('token');
     const username = localStorage.getItem('username');
@@ -20,8 +21,18 @@ const Header = () => {
       dispatch(fetchUserOnLoad());
     }
   }, [dispatch]);
+  useEffect(() => {
+    if (user?.image) {
+      setUserImage(user.image);
+    } else {
+      setUserImage(noPhotos);
+    }
+  }, [user]);
   const onOut = () => {
     dispatch(signOut());
+  };
+  const handleError = () => {
+    setUserImage(noPhotos);
   };
 
   return (
@@ -43,7 +54,7 @@ const Header = () => {
               </div>
               <div className={style.avatar}>
                 <Link to={'/profile'}>
-                  <img src={user?.image || noPhotos} alt={`image ${user?.image}`} className={style.avatarImg} />
+                  <img onError={handleError} src={userImage} alt={`image ${user?.image}`} className={style.avatarImg} />
                 </Link>
               </div>
               <Button onClick={onOut} className={style.headerButtonLogOut}>

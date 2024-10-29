@@ -1,9 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
+import { BASE_URL } from '../../constants/baseURL';
+
 export const signInSlice = createApi({
   reducerPath: 'signInApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://blog-platform.kata.academy/api',
+    baseUrl: BASE_URL,
   }),
   endpoints: (builder) => ({
     postSignIn: builder.mutation({
@@ -21,7 +23,7 @@ export const signInSlice = createApi({
 
 export const fetchProtectedData = async () => {
   const token = localStorage.getItem('token');
-  const response = await fetch('https://blog-platform.kata.academy/api/user', {
+  const response = await fetch(`${BASE_URL}/user`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -32,7 +34,6 @@ export const fetchProtectedData = async () => {
     throw new Error('error');
   }
   const data = await response.json();
-  console.log(data);
   return data;
 };
 

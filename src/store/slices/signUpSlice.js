@@ -1,9 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
+import { BASE_URL } from '../../constants/baseURL';
+
 export const signUpSlice = createApi({
   reducerPath: 'signUpApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://blog-platform.kata.academy/api',
+    baseUrl: BASE_URL,
   }),
   endpoints: (builder) => ({
     postSignUp: builder.mutation({
