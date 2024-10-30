@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Spin, Button, Input, Checkbox, Form, message } from 'antd';
 import { useForm, Controller } from 'react-hook-form';
 import { Link } from 'react-router-dom';
@@ -9,37 +9,45 @@ import style from './signUp.module.scss';
 
 const SignUp = () => {
   const [postSignUp, { isLoading }] = usePostSignUpMutation();
-  const [hasError, setHasError] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   const {
     handleSubmit,
     control,
     watch,
+    setError,
     formState: { errors },
   } = useForm({ mode: 'onTouched' });
 
   const [messageApi, contextHolder] = message.useMessage();
-  const success = () => {
-    messageApi.open({
-      type: 'success',
-      content: 'Successfully registered',
-    });
-  };
   useEffect(() => {
-    if (hasError) {
+    if (successMessage) {
       messageApi.open({
-        type: 'error',
-        content: 'Registration error, try again',
+        type: 'success',
+        content: 'Successfully registered',
       });
-      setHasError(false);
+      setSuccessMessage('');
     }
-  }, [hasError, messageApi]);
+  }, [successMessage, messageApi]);
   const onSubmit = async (data) => {
     try {
       await postSignUp(data).unwrap();
-      success();
+      setSuccessMessage(true);
     } catch (err) {
-      setHasError(true);
+      if (err.status === 422 && err.data.errors) {
+        const serverErrors = err.data.errors;
+        if (serverErrors.username) {
+          setError('username', { type: 'server', message: serverErrors.username });
+        }
+        if (serverErrors.email) {
+          setError('email', { type: 'server', message: serverErrors.email });
+        }
+      } else {
+        messageApi.open({
+          type: 'error',
+          content: 'Registration error, try again',
+        });
+      }
     }
   };
 
